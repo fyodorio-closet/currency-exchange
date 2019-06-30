@@ -1,0 +1,141 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "currency-convertor": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/currency-convertor",
+      "sourceRoot": "apps/currency-convertor/src",
+      "prefix": "currency-convertor",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/currency-convertor",
+            "index": "apps/currency-convertor/src/index.html",
+            "main": "apps/currency-convertor/src/main.ts",
+            "polyfills": "apps/currency-convertor/src/polyfills.ts",
+            "tsConfig": "apps/currency-convertor/tsconfig.app.json",
+            "assets": [
+              "apps/currency-convertor/src/favicon.ico",
+              "apps/currency-convertor/src/assets"
+            ],
+            "styles": ["apps/currency-convertor/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/currency-convertor/src/environments/environment.ts",
+                  "with": "apps/currency-convertor/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "currency-convertor:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "currency-convertor:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "currency-convertor:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/currency-convertor/tsconfig.app.json",
+              "apps/currency-convertor/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/currency-convertor/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/currency-convertor/jest.config.js",
+            "tsConfig": "apps/currency-convertor/tsconfig.spec.json",
+            "setupFile": "apps/currency-convertor/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "currency-convertor-e2e": {
+      "root": "apps/currency-convertor-e2e",
+      "sourceRoot": "apps/currency-convertor-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/currency-convertor-e2e/cypress.json",
+            "tsConfig": "apps/currency-convertor-e2e/tsconfig.e2e.json",
+            "devServerTarget": "currency-convertor:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "currency-convertor:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/currency-convertor-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**", "!apps/currency-convertor-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "currency-convertor"
+}
