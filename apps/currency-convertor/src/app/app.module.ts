@@ -11,17 +11,16 @@ import {
 } from './state/rates.reducer';
 import { RatesEffects } from './state/rates.effects';
 import { RatesFacade } from './state/rates.facade';
+import { DataPersistence } from '@nrwl/angular';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    StoreModule.forFeature(RATES_FEATURE_KEY, ratesReducer, {
-      initialState: ratesInitialState
-    }),
-    EffectsModule.forFeature([RatesEffects])
+    StoreModule.forRoot({ rates: ratesReducer }),
+    EffectsModule.forRoot([RatesEffects])
   ],
-  providers: [RatesFacade],
+  providers: [RatesFacade, DataPersistence],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
