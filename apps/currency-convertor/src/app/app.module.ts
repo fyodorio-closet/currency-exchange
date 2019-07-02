@@ -8,6 +8,7 @@ import { ratesReducer } from './state/rates.reducer';
 import { RatesEffects } from './state/rates.effects';
 import { DataFetcherService } from './data-fetcher/data-fetcher.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     StoreModule.forRoot({ state: ratesReducer }),
     EffectsModule.forRoot([RatesEffects]),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [DataFetcherService],
   bootstrap: [AppComponent]

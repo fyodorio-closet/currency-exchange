@@ -1,5 +1,43 @@
+<form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="source-select">Source currency:</label>
+    <select id="source-select" (change)="changeSource($event)" formControlName="sourceCurrency">
+      <option value="">--Please choose a source currency--</option>
+      <option *ngFor="let sourceKey of sourceCurrencyList" value="{{sourceKey}}">{{sourceKey}}</option>
+    </select>
+
+    <label for="target-select">Target currency:</label>
+    <select id="target-select" (change)="changeTarget($event)" formControlName="targetCurrency">
+      <option value="">--Please choose a target currency--</option>
+      <option *ngFor="let targetKey of targetCurrencyList" value="{{targetKey}}">{{targetKey}}</option>
+    </select>
+  </div>
+
+  <div>
+    <input id="source-value" type="text" formControlName="sourceValue">
+    <input id="target-value" type="text" formControlName="targetValue">
+  </div>
+
+  <div>
+    <input
+      type="date"
+      (change)="changeRequestDate($event)"
+      formControlName="requestDate"
+      id="request-date"
+      name="request-date"
+      value="{{defaultDate}}">
+
+    <button type="submit">Submit</button>
+  </div>
+
+</form>
+
+
 <div>Base Currency: {{ (rates$ | async)?.ratesSet.base }}</div>
 <div>Current Date: {{ (rates$ | async)?.ratesSet.date }}</div>
 <div *ngFor="let key of objectKeys((rates$ | async)?.ratesSet.rates)">
   <span>{{ key }}</span><span> | </span><span>{{ (rates$ | async)?.ratesSet.rates[key] }}</span>
 </div>
+
+
