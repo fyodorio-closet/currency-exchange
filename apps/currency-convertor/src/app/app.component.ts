@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataFetcherService } from './data-fetcher/data-fetcher.service';
-import { RatesState } from './state/rates.model';
+import { RatesState } from './models/rates.model';
 import { LoadRates } from './state/rates.actions';
 
 @Component({

@@ -7,7 +7,7 @@ import {
 } from './rates.actions';
 import { DataFetcherService } from '../data-fetcher/data-fetcher.service';
 import { switchMap } from 'rxjs/operators';
-import { RatesSet } from '../rates-set.model';
+import { RatesSet } from '../models/rates-set.model';
 import { of } from 'rxjs';
 
 @Injectable()

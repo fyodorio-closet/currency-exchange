@@ -1,5 +1,5 @@
 import { RatesAction, RatesActionTypes } from './rates.actions';
-import { RatesState } from './rates.model';
+import { RatesState } from '../models/rates.model';
 
 const initialRatesState: RatesState = {
   ratesSet: {
