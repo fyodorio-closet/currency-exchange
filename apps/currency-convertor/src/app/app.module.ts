@@ -4,23 +4,20 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import {
-  RATES_FEATURE_KEY,
-  initialState as ratesInitialState,
-  ratesReducer
-} from './state/rates.reducer';
+import { ratesReducer } from './state/rates.reducer';
 import { RatesEffects } from './state/rates.effects';
-import { RatesFacade } from './state/rates.facade';
-import { DataPersistence } from '@nrwl/angular';
+import { DataFetcherService } from './data-fetcher/data-fetcher.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({ rates: ratesReducer }),
-    EffectsModule.forRoot([RatesEffects])
+    StoreModule.forRoot({ state: ratesReducer }),
+    EffectsModule.forRoot([RatesEffects]),
+    HttpClientModule
   ],
-  providers: [RatesFacade, DataPersistence],
+  providers: [DataFetcherService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

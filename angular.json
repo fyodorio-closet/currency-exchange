@@ -119,6 +119,96 @@
           }
         }
       }
+    },
+    "x-change-x-change": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/x-change/x-change",
+      "sourceRoot": "apps/x-change/x-change/src",
+      "prefix": "xc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/x-change/x-change",
+            "index": "apps/x-change/x-change/src/index.html",
+            "main": "apps/x-change/x-change/src/main.ts",
+            "polyfills": "apps/x-change/x-change/src/polyfills.ts",
+            "tsConfig": "apps/x-change/x-change/tsconfig.app.json",
+            "assets": [
+              "apps/x-change/x-change/src/favicon.ico",
+              "apps/x-change/x-change/src/assets"
+            ],
+            "styles": ["apps/x-change/x-change/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/x-change/x-change/src/environments/environment.ts",
+                  "with": "apps/x-change/x-change/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "x-change-x-change:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "x-change-x-change:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "x-change-x-change:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/x-change/x-change/tsconfig.app.json",
+              "apps/x-change/x-change/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/x-change/x-change/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/x-change/x-change/jest.config.js",
+            "tsConfig": "apps/x-change/x-change/tsconfig.spec.json",
+            "setupFile": "apps/x-change/x-change/src/test-setup.ts"
+          }
+        }
+      }
     }
   },
   "cli": {

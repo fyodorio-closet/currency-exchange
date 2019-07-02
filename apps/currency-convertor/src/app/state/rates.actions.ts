@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Entity } from './rates.reducer';
+import { RatesSet } from '../rates-set.model';
 
 export enum RatesActionTypes {
   LoadRates = '[Rates] Load Rates',
@@ -18,13 +18,7 @@ export class RatesLoadError implements Action {
 
 export class RatesLoaded implements Action {
   readonly type = RatesActionTypes.RatesLoaded;
-  constructor(public payload: Entity[]) {}
+  constructor(public payload: RatesSet) {}
 }
 
 export type RatesAction = LoadRates | RatesLoaded | RatesLoadError;
-
-export const fromRatesActions = {
-  LoadRates,
-  RatesLoaded,
-  RatesLoadError
-};

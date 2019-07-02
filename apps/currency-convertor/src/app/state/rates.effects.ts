@@ -1,34 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
-import { DataPersistence } from '@nrwl/angular';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 
-import { RatesPartialState } from './rates.reducer';
 import {
-  LoadRates,
   RatesLoaded,
-  RatesLoadError,
   RatesActionTypes
 } from './rates.actions';
+import { DataFetcherService } from '../data-fetcher/data-fetcher.service';
+import { switchMap } from 'rxjs/operators';
+import { RatesSet } from '../rates-set.model';
+import { of } from 'rxjs';
 
 @Injectable()
 export class RatesEffects {
-  @Effect() loadRates$ = this.dataPersistence.fetch(
-    RatesActionTypes.LoadRates,
-    {
-      run: (action: LoadRates, state: RatesPartialState) => {
-        // Your custom REST 'load' logic goes here. For now just return an empty list...
-        return new RatesLoaded([]);
-      },
-
-      onError: (action: LoadRates, error) => {
-        console.error('Error', error);
-        return new RatesLoadError(error);
-      }
-    }
+  @Effect() loadRates$ = this.actions$.pipe(
+      ofType(RatesActionTypes.LoadRates),
+      switchMap(() => this.dataFetcher.getData()),
+      switchMap((ratesSet: RatesSet) => of(new RatesLoaded(ratesSet)))
   );
 
   constructor(
     private actions$: Actions,
-    private dataPersistence: DataPersistence<RatesPartialState>
+    private dataFetcher: DataFetcherService
   ) {}
 }
