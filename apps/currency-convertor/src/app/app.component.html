@@ -1,7 +1,10 @@
 <div class="currency-convertor-app" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <span>Currency Exchange App</span>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="center center">
+      <span fxFlex>Currency Exchange App</span>
+      <a href="https://github.com/loenko/currency-exchange" target="_blank">
+        <img src="../assets/github-logo.png" alt="Source at Github">
+      </a>
     </mat-toolbar-row>
   </mat-toolbar>
   <form [formGroup]="currencyForm" fxFlexFill>
