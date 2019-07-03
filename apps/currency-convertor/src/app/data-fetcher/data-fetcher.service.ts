@@ -8,7 +8,8 @@ import { RatesSet } from '../models/rates.model';
 
 const API_URL_BASE = 'https://api.exchangeratesapi.io/';
 const API_URL = `${API_URL_BASE}latest`;
-const API_MOCK_URL = 'https://api.myjson.com/bins/1dnd5n';
+// Mock url is used when the main API is not accessible
+// const API_MOCK_URL = 'https://api.myjson.com/bins/1dnd5n';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class DataFetcherService {
   constructor(private http: HttpClient, private calculator: AppService) { }
 
   getData(): Observable<any> {
-    return this.http.get(API_MOCK_URL);
+    return this.http.get(API_URL);
   }
 
   getDataByDate(action): Observable<any>{
