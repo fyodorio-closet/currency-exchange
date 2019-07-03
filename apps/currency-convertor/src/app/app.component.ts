@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // Check if currency is flipped and replace it
       if (this.currencyForm.controls['targetCurrency'].value === change) {
         this.targetCurrencyList.push(this.currentSourceCurrencyName);
-        this.currencyForm.controls['targetCurrency'].setValue(this.currentSourceCurrencyName, {onlySelf: true})
+        this.currencyForm.controls['targetCurrency'].setValue(this.currentSourceCurrencyName, {onlySelf: true});
         this.currentTargetCurrencyName = this.currentSourceCurrencyName;
       }
       // Reference current chosen currency in component
@@ -118,16 +118,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.currencyForm.controls['sourceCurrency'].setValue(this.currentTargetCurrencyName);
   }
 
-  generateCurrencyTable() {
-    this.currentCurrencyTable.displayedColumns = ['code', 'value'];
-
-    this.currentCurrencyTable.dataSource = this.objectKeys(this.dataSet.rates).map(key => {
-      return { code: key, value: this.dataSet.rates[key] };
-    });
-    this.sortedCurrencyTable = this.currentCurrencyTable;
-  }
-
-  sortData(sort: Sort) {
+  sortData(sort: Sort): void {
     const data = this.currentCurrencyTable.dataSource.slice();
     if (!sort.active || sort.direction === '') {
       this.sortedCurrencyTable.dataSource = data;
@@ -144,7 +135,16 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  compare(a: number | string, b: number | string, isAsc: boolean) {
+  private compare(a: number | string, b: number | string, isAsc: boolean): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  private generateCurrencyTable(): void {
+    this.currentCurrencyTable.displayedColumns = ['code', 'value'];
+
+    this.currentCurrencyTable.dataSource = this.objectKeys(this.dataSet.rates).map(key => {
+      return { code: key, value: this.dataSet.rates[key] };
+    });
+    this.sortedCurrencyTable = this.currentCurrencyTable;
   }
 }

@@ -15,7 +15,6 @@ export class RatesEffects {
       switchMap((ratesSet: RatesSet) => of(new RatesLoaded(ratesSet)))
   );
 
-  // @ts-ignore
   @Effect() loadRatesByDate$ = this.actions$.pipe(
     ofType(RatesActionTypes.LoadRatesByDate),
     switchMap((action) => this.dataFetcher.getDataByDate(action)),
