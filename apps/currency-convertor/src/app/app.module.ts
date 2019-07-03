@@ -10,6 +10,11 @@ import { DataFetcherService } from './data-fetcher/data-fetcher.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppService } from './app.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment.prod';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +23,15 @@ import { AppService } from './app.service';
     StoreModule.forRoot({ state: ratesReducer }),
     EffectsModule.forRoot([RatesEffects]),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    MatIconModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Currency Convertor App',
+      logOnly: environment.production,
+    }),
   ],
   providers: [DataFetcherService, AppService],
   bootstrap: [AppComponent]

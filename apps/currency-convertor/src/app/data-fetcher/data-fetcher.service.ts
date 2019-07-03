@@ -16,7 +16,9 @@ export class DataFetcherService {
     return this.http.get(`${API_URL}latest`);
   }
 
-  getDataByDate(date: string, base: string): Observable<any> {
+  getDataByDate(action): Observable<any>{
+    const date = action.payload.date;
+    const base = action.payload.base;
     return this.http.get(`${API_URL}${date}`).pipe(
       map((rateSet: RatesSet) => this.calculator.getRatesByAnotherBase(rateSet, base))
     );

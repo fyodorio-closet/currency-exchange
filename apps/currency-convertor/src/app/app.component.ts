@@ -9,7 +9,7 @@ import { RatesSet } from './models/rates-set.model';
 import { AppService } from './app.service';
 
 @Component({
-  selector: 'currency-convertor-root',
+  selector: 'currency-convertor-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

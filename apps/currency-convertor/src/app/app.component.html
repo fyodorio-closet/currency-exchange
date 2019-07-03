@@ -1,41 +1,48 @@
-<form [formGroup]="currencyForm">
+<div class="currency-convertor-app" fxLayout="column" fxLayoutAlign="center center">
+  <h1>Currency Exchange App</h1>
+  <form [formGroup]="currencyForm">
 
-  <div>
-    <label for="source-select">Source currency:</label>
-    <select id="source-select" formControlName="sourceCurrency">
-      <option value="">--Please choose a source currency--</option>
-      <option *ngFor="let sourceKey of sourceCurrencyList" value="{{sourceKey}}">{{sourceKey}}</option>
-    </select>
+    <div>
+      <label for="source-select">Source currency:</label>
+      <select id="source-select" formControlName="sourceCurrency">
+        <option value="">--Please choose a source currency--</option>
+        <option *ngFor="let sourceKey of sourceCurrencyList" value="{{sourceKey}}">{{sourceKey}}</option>
+      </select>
 
-    <button (click)="swapCurrencies()"><=></button>
+      <button (click)="swapCurrencies()" mat-icon-button aria-label="Swap Currencies">
+        <mat-icon>cached</mat-icon>
+      </button>
 
-    <label for="target-select">Target currency:</label>
-    <select id="target-select" formControlName="targetCurrency">
-      <option value="">--Please choose a target currency--</option>
-      <option *ngFor="let targetKey of targetCurrencyList" value="{{targetKey}}">{{targetKey}}</option>
-    </select>
-  </div>
+      <label for="target-select">Target currency:</label>
+      <select id="target-select" formControlName="targetCurrency">
+        <option value="">--Please choose a target currency--</option>
+        <option *ngFor="let targetKey of targetCurrencyList" value="{{targetKey}}">{{targetKey}}</option>
+      </select>
+    </div>
 
-  <div>
-    <input id="source-value" type="text" formControlName="sourceValue">
-    <span id="target-value">{{targetValue || ''}}</span>
-  </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div>
+        <input id="source-value" type="text" formControlName="sourceValue">
+        <span id="target-value">{{targetValue || ''}}</span>
+      </div>
 
-  <div>
-    <input
-      type="date"
-      formControlName="requestDate"
-      id="request-date"
-      name="request-date"
-      value="{{defaultDate}}">
-  </div>
+      <div>
+        <input
+          type="date"
+          formControlName="requestDate"
+          id="request-date"
+          name="request-date"
+          value="{{defaultDate}}">
+      </div>
+    </div>
 
-</form>
+  </form>
 
-<h3>Currency Exchange Rates for {{currentSourceCurrencyName}} by {{defaultDate}}</h3>
-<div *ngIf="dataSet">
-  <div *ngFor="let key of objectKeys(dataSet.rates)">
-    <span>{{ key }}</span><span> | </span><span>{{ dataSet.rates[key] }}</span>
+  <h3>Currency Exchange Rates for {{currentSourceCurrencyName}} by {{defaultDate}}</h3>
+  <div *ngIf="dataSet">
+    <div *ngFor="let key of objectKeys(dataSet.rates)">
+      <span>{{ key }}</span><span> | </span><span>{{ dataSet.rates[key] }}</span>
+    </div>
   </div>
 </div>
 

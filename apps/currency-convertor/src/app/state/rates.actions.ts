@@ -13,7 +13,7 @@ export class LoadRates implements Action {
 
 export class LoadRatesByDate implements Action {
   readonly type = RatesActionTypes.LoadRatesByDate;
-  constructor(public payload: any = null) {}
+  constructor(public payload: RatesSet) {}
 }
 
 export class RatesLoaded implements Action {
