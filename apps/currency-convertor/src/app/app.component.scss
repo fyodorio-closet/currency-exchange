@@ -1,6 +1,7 @@
 .currency-convertor-app {
   .mat-h2 {
     margin: 0;
+    color: green;
   }
   .counting-row > mat-icon {
     margin-right: 8px;
@@ -14,6 +15,12 @@
     }
   }
   img {
-    margin-top: 5px;
+    margin-top: 9px;
+  }
+  .table-container {
+    min-height: 128px;
+    height: 50vh;
+    overflow: auto;
+    margin-bottom: 5vh;
   }
 }
