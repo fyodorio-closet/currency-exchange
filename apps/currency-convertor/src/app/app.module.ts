@@ -21,7 +21,11 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDatepickerModule, MatNativeDateModule, MatTableModule, MAT_DATE_LOCALE
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatTableModule,
+  MAT_DATE_LOCALE,
+  MatSortModule
 } from '@angular/material';
 
 @NgModule({
@@ -43,6 +47,7 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
+    MatSortModule,
     StoreDevtoolsModule.instrument({
       name: 'NgRx Currency Convertor App',
       logOnly: environment.production,

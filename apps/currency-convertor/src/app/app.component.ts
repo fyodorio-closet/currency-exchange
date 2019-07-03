@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataFetcherService } from './data-fetcher/data-fetcher.service';
-import { RatesState } from './models/rates.model';
+import { CurrencyTable, RatesState } from './models/rates.model';
 import { LoadRates, LoadRatesByDate } from './state/rates.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RatesSet } from './models/rates-set.model';
 import { AppService } from './app.service';
+import { Sort } from '@angular/material';
 
 @Component({
   selector: 'currency-convertor-app',
@@ -31,6 +32,14 @@ export class AppComponent implements OnInit {
   dataSet: RatesSet;
   sourceValue = 1;
   currentDate = new Date();
+  currentCurrencyTable: CurrencyTable = {
+    displayedColumns: [],
+    dataSource: []
+  };
+  sortedCurrencyTable: CurrencyTable = {
+    displayedColumns: [],
+    dataSource: []
+  };
 
   constructor(private calculator: AppService, private store: Store<RatesState>, private dataFetcher: DataFetcherService, public fb: FormBuilder) {
     this.rates$ = this.store.pipe(select('state'));
@@ -47,6 +56,7 @@ export class AppComponent implements OnInit {
       this.currencyForm.controls['requestDate'].setValue(this.defaultDate, {onlySelf: true});
       this.currencyForm.controls['sourceValue'].setValue(this.sourceValue, {onlySelf: true});
       this.targetValue = this.currencyForm.controls['sourceValue'].value*data.ratesSet.rates[this.currencyForm.controls['targetCurrency'].value];
+      this.generateCurrencyTable();
     });
   }
 
@@ -76,13 +86,14 @@ export class AppComponent implements OnInit {
       this.currentSourceCurrencyName = change;
       // Change calculation if any
       this.targetValue = this.sourceValue*this.dataSet.rates[this.currencyForm.controls['targetCurrency'].value];
+      this.generateCurrencyTable();
     });
 
     // Process target currency change
     this.currencyForm.controls['targetCurrency'].valueChanges.subscribe(change => {
       this.targetValue = this.sourceValue*this.dataSet.rates[this.currencyForm.controls['targetCurrency'].value];
       this.currentTargetCurrencyName = change;
-    })
+    });
 
     // Process date change
     this.currencyForm.controls['requestDate'].valueChanges.subscribe(change => {
@@ -100,5 +111,35 @@ export class AppComponent implements OnInit {
 
   swapCurrencies() {
     this.currencyForm.controls['sourceCurrency'].setValue(this.currentTargetCurrencyName);
+  }
+
+  generateCurrencyTable() {
+    this.currentCurrencyTable.displayedColumns = ['code', 'value'];
+
+    this.currentCurrencyTable.dataSource = this.objectKeys(this.dataSet.rates).map(key => {
+      return { code: key, value: this.dataSet.rates[key] };
+    });
+    this.sortedCurrencyTable = this.currentCurrencyTable;
+  }
+
+  sortData(sort: Sort) {
+    const data = this.currentCurrencyTable.dataSource.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedCurrencyTable.dataSource = data;
+      return;
+    }
+
+    this.sortedCurrencyTable.dataSource = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'code': return this.compare(a.code, b.code, isAsc);
+        case 'value': return this.compare(a.value, b.value, isAsc);
+        default: return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
