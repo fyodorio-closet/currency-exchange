@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { Sort } from '@angular/material';
 
-import { DataFetcherService } from './data-fetcher/data-fetcher.service';
 import { CurrencyTable, RatesState } from './models/rates.model';
 import { LoadRates, LoadRatesByDate } from './state/rates.actions';
 import { RatesSet } from './models/rates.model';
@@ -15,7 +14,7 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   rates$: Observable<RatesState>;
   objectKeys = Object.keys;
   currencyForm: FormGroup = this.fb.group({
@@ -41,10 +40,11 @@ export class AppComponent implements OnInit {
     displayedColumns: [],
     dataSource: []
   };
+  subscription: Subscription;
 
-  constructor(private calculator: AppService, private store: Store<RatesState>, private dataFetcher: DataFetcherService, public fb: FormBuilder) {
+  constructor(private calculator: AppService, private store: Store<RatesState>, public fb: FormBuilder) {
     this.rates$ = this.store.pipe(select('state'));
-    this.rates$.subscribe(data => {
+    this.subscription = this.rates$.subscribe(data => {
       this.targetCurrencyList = this.objectKeys(data.ratesSet.rates).map(key => key);
       this.sourceCurrencyList = [
         ...this.targetCurrencyList,
@@ -65,13 +65,13 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new LoadRates());
 
     // Process number change
-    this.currencyForm.controls['sourceValue'].valueChanges.subscribe(change => {
+    this.subscription.add(this.currencyForm.controls['sourceValue'].valueChanges.subscribe(change => {
       this.sourceValue = change;
       this.targetValue = change*this.dataSet.rates[this.currentTargetCurrencyName];
-    });
+    }));
 
     // Process source currency change
-    this.currencyForm.controls['sourceCurrency'].valueChanges.subscribe(change => {
+    this.subscription.add(this.currencyForm.controls['sourceCurrency'].valueChanges.subscribe(change => {
       this.dataSet = this.calculator.getRatesByAnotherBase(this.dataSet, change);
       // In target list remove new currency to avoid repetition
       this.targetCurrencyList = this.targetCurrencyList.filter(
@@ -88,16 +88,16 @@ export class AppComponent implements OnInit {
       // Change calculation if any
       this.targetValue = this.sourceValue*this.dataSet.rates[this.currencyForm.controls['targetCurrency'].value];
       this.generateCurrencyTable();
-    });
+    }));
 
     // Process target currency change
-    this.currencyForm.controls['targetCurrency'].valueChanges.subscribe(change => {
+    this.subscription.add(this.currencyForm.controls['targetCurrency'].valueChanges.subscribe(change => {
       this.targetValue = this.sourceValue*this.dataSet.rates[this.currencyForm.controls['targetCurrency'].value];
       this.currentTargetCurrencyName = change;
-    });
+    }));
 
     // Process date change
-    this.currencyForm.controls['requestDate'].valueChanges.subscribe(change => {
+    this.subscription.add(this.currencyForm.controls['requestDate'].valueChanges.subscribe(change => {
       const oldValue = this.dataSet.date;
       const newValue = new Date(change).toISOString().substring(0, 10);
       if (newValue && newValue !== oldValue) this.store.dispatch(new LoadRatesByDate(
@@ -107,7 +107,11 @@ export class AppComponent implements OnInit {
           base: this.currentSourceCurrencyName
         }
       ));
-    });
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   swapCurrencies() {
