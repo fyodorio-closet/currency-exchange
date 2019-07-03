@@ -9,6 +9,7 @@ import { RatesEffects } from './state/rates.effects';
 import { DataFetcherService } from './data-fetcher/data-fetcher.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [DataFetcherService],
+  providers: [DataFetcherService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

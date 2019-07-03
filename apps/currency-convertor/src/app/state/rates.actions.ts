@@ -3,17 +3,17 @@ import { RatesSet } from '../models/rates-set.model';
 
 export enum RatesActionTypes {
   LoadRates = '[Rates] Load Rates',
-  RatesLoaded = '[Rates] Rates Loaded',
-  RatesLoadError = '[Rates] Rates Load Error'
+  LoadRatesByDate = '[Rates] Load Rates by Date',
+  RatesLoaded = '[Rates] Rates Loaded'
 }
 
 export class LoadRates implements Action {
   readonly type = RatesActionTypes.LoadRates;
 }
 
-export class RatesLoadError implements Action {
-  readonly type = RatesActionTypes.RatesLoadError;
-  constructor(public payload: any) {}
+export class LoadRatesByDate implements Action {
+  readonly type = RatesActionTypes.LoadRatesByDate;
+  constructor(public payload: any = null) {}
 }
 
 export class RatesLoaded implements Action {
@@ -21,4 +21,4 @@ export class RatesLoaded implements Action {
   constructor(public payload: RatesSet) {}
 }
 
-export type RatesAction = LoadRates | RatesLoaded | RatesLoadError;
+export type RatesAction = LoadRates | LoadRatesByDate | RatesLoaded;

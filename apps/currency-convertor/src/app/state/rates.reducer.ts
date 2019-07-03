@@ -19,6 +19,15 @@ export function ratesReducer(
         ratesSet: action.payload
       };
     }
+    case RatesActionTypes.LoadRatesByDate: {
+      return {
+        ...state,
+        ratesSet: {
+          ...state.ratesSet,
+          date: action.payload.date
+        }
+      };
+    }
     default: return state;
   }
 }

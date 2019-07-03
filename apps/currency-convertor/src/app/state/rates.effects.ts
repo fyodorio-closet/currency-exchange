@@ -18,6 +18,12 @@ export class RatesEffects {
       switchMap((ratesSet: RatesSet) => of(new RatesLoaded(ratesSet)))
   );
 
+  @Effect() loadRatesByDate$ = this.actions$.pipe(
+    ofType(RatesActionTypes.LoadRatesByDate),
+    switchMap((action) => this.dataFetcher.getDataByDate(action.payload.date, action.payload.base)),
+    switchMap((ratesSet: RatesSet) => of(new RatesLoaded(ratesSet)))
+  );
+
   constructor(
     private actions$: Actions,
     private dataFetcher: DataFetcherService
