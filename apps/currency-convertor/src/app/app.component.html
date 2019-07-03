@@ -1,4 +1,4 @@
-<form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="currencyForm">
 
   <div>
     <label for="source-select">Source currency:</label>
@@ -18,19 +18,16 @@
 
   <div>
     <input id="source-value" type="text" formControlName="sourceValue">
-    <span id="target-value">{{targetValue}}</span>
+    <span id="target-value">{{targetValue || ''}}</span>
   </div>
 
   <div>
     <input
       type="date"
-      (change)="changeRequestDate($event)"
       formControlName="requestDate"
       id="request-date"
       name="request-date"
       value="{{defaultDate}}">
-
-    <button type="submit">Submit</button>
   </div>
 
 </form>

@@ -13,7 +13,6 @@ import { RatesSet } from './models/rates-set.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'currency-convertor';
   rates$: Observable<RatesState>;
   objectKeys = Object.keys;
   currencyForm: FormGroup = this.fb.group({
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
   targetCurrencyList: string[];
   currentSourceCurrencyName = 'EUR';
   currentTargetCurrencyName = 'USD';
-  isSubmitted = false;
   defaultDate: string;
   targetValue: number;
   dataSet: RatesSet;
@@ -85,19 +83,6 @@ export class AppComponent implements OnInit {
     })
 
     // Process date change
-  }
-
-  changeRequestDate(e) {
-    this.currencyForm.controls['requestDate'].setValue(e.target.value, {onlySelf: true})
-  }
-
-  onSubmit() {
-    this.isSubmitted = true;
-    if (!this.currencyForm.valid) {
-      return false;
-    } else {
-      console.log(JSON.stringify(this.currencyForm.value))
-    }
   }
 
   swapCurrencies() {
