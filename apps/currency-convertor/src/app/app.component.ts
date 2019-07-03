@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
   targetValue: number;
   dataSet: RatesSet;
   sourceValue = 1;
+  currentDate = new Date();
 
   constructor(private calculator: AppService, private store: Store<RatesState>, private dataFetcher: DataFetcherService, public fb: FormBuilder) {
     this.rates$ = this.store.pipe(select('state'));
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
     // Process date change
     this.currencyForm.controls['requestDate'].valueChanges.subscribe(change => {
       const oldValue = this.dataSet.date;
-      const newValue = change;
+      const newValue = new Date(change).toISOString().substring(0, 10);
       if (newValue && newValue !== oldValue) this.store.dispatch(new LoadRatesByDate(
         {
           ...this.dataSet,

@@ -1,39 +1,60 @@
 <div class="currency-convertor-app" fxLayout="column" fxLayoutAlign="center center">
-  <h1>Currency Exchange App</h1>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Currency Exchange App</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
   <form [formGroup]="currencyForm">
 
     <div>
-      <label for="source-select">Source currency:</label>
-      <select id="source-select" formControlName="sourceCurrency">
-        <option value="">--Please choose a source currency--</option>
-        <option *ngFor="let sourceKey of sourceCurrencyList" value="{{sourceKey}}">{{sourceKey}}</option>
-      </select>
+      <mat-form-field>
+        <select id="source-select" formControlName="sourceCurrency" matNativeControl>
+          <option value="">--Please choose a source currency--</option>
+          <option *ngFor="let sourceKey of sourceCurrencyList" value="{{sourceKey}}">{{sourceKey}}</option>
+        </select>
+      </mat-form-field>
 
       <button (click)="swapCurrencies()" mat-icon-button aria-label="Swap Currencies">
         <mat-icon>cached</mat-icon>
       </button>
 
-      <label for="target-select">Target currency:</label>
-      <select id="target-select" formControlName="targetCurrency">
-        <option value="">--Please choose a target currency--</option>
-        <option *ngFor="let targetKey of targetCurrencyList" value="{{targetKey}}">{{targetKey}}</option>
-      </select>
+      <mat-form-field>
+        <select id="target-select" formControlName="targetCurrency" matNativeControl>
+          <option value="">--Please choose a target currency--</option>
+          <option *ngFor="let targetKey of targetCurrencyList" value="{{targetKey}}">{{targetKey}}</option>
+        </select>
+      </mat-form-field>
     </div>
 
     <div fxLayout="column" fxLayoutAlign="center center">
-      <div>
-        <input id="source-value" type="text" formControlName="sourceValue">
-        <span id="target-value">{{targetValue || ''}}</span>
+      <div fxLayout="row" fxLayoutAlign="start center" class="counting-row">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <mat-form-field>
+          <input matInput type="number" formControlName="sourceValue">
+        </mat-form-field>
+        <mat-icon>arrow_forward_ios</mat-icon>
+        <div class="mat-h2" id="target-value">{{targetValue || ''}}</div>
       </div>
 
-      <div>
+<!--      <div>-->
+<!--        <input-->
+<!--          type="date"-->
+<!--          formControlName="requestDate"-->
+<!--          id="request-date"-->
+<!--          name="request-date"-->
+<!--          value="{{defaultDate}}">-->
+<!--      </div>-->
+      <mat-form-field>
         <input
-          type="date"
-          formControlName="requestDate"
-          id="request-date"
-          name="request-date"
-          value="{{defaultDate}}">
-      </div>
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Choose a date"
+          [min]="'1999-01-01'"
+          [max]="currentDate"
+          formControlName="requestDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
 
   </form>

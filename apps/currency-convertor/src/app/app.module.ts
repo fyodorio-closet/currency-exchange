@@ -14,7 +14,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment.prod';
-import { MatButtonModule, MatIconModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatIconModule,
+  MatSelectModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule, MatNativeDateModule, MatTableModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +35,14 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
     FlexLayoutModule,
     MatIconModule,
     MatButtonModule,
+    MatToolbarModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
     StoreDevtoolsModule.instrument({
       name: 'NgRx Currency Convertor App',
       logOnly: environment.production,
