@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { Sort } from '@angular/material';
+
 import { DataFetcherService } from './data-fetcher/data-fetcher.service';
 import { CurrencyTable, RatesState } from './models/rates.model';
 import { LoadRates, LoadRatesByDate } from './state/rates.actions';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { RatesSet } from './models/rates-set.model';
+import { RatesSet } from './models/rates.model';
 import { AppService } from './app.service';
-import { Sort } from '@angular/material';
 
 @Component({
   selector: 'currency-convertor-app',

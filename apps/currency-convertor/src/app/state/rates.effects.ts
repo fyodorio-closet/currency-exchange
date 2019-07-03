@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 
-import {
-  RatesLoaded,
-  RatesActionTypes
-} from './rates.actions';
+import { RatesLoaded, RatesActionTypes } from './rates.actions';
 import { DataFetcherService } from '../data-fetcher/data-fetcher.service';
-import { switchMap } from 'rxjs/operators';
-import { RatesSet } from '../models/rates-set.model';
-import { of } from 'rxjs';
+import { RatesSet } from '../models/rates.model';
 
 @Injectable()
 export class RatesEffects {

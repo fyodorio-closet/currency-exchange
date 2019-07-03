@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { RatesSet } from '../models/rates-set.model';
+import { RatesSet } from '../models/rates.model';
 
 export enum RatesActionTypes {
   LoadRates = '[Rates] Load Rates',

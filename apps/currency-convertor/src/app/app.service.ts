@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RatesSet } from './models/rates-set.model';
+import { RatesSet } from './models/rates.model';
 
 @Injectable()
 export class AppService {

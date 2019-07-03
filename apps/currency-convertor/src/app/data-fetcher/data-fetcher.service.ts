@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { AppService } from '../app.service';
-import { map, switchMap } from 'rxjs/operators';
-import { RatesSet } from '../models/rates-set.model';
+import { RatesSet } from '../models/rates.model';
 
 const API_URL_BASE = 'https://api.exchangeratesapi.io/';
 const API_URL = `${API_URL_BASE}latest`;
