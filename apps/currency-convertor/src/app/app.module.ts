@@ -21,7 +21,7 @@ import {
   MatToolbarModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDatepickerModule, MatNativeDateModule, MatTableModule
+  MatDatepickerModule, MatNativeDateModule, MatTableModule, MAT_DATE_LOCALE
 } from '@angular/material';
 
 @NgModule({
@@ -48,7 +48,7 @@ import {
       logOnly: environment.production,
     }),
   ],
-  providers: [DataFetcherService, AppService],
+  providers: [DataFetcherService, AppService, {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
